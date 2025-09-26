@@ -1,0 +1,41 @@
+<launch>
+  <!-- Use simulated time from Gazebo -->
+  <param name="use_sim_time" value="true"/>
+
+  <!-- Your world + robot (adjust include to your setup if needed) -->
+  <include file="$(find IRProject1)/launch/roomandhallway.launch"/>
+
+  <!-- Keyboard teleop (simulation-friendly) -->
+  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop" output="screen">
+    <!-- teleop publishes /cmd_vel; we read it as /teleop_cmd -->
+    <remap from="/cmd_vel" to="/teleop_cmd"/>
+  </node>
+
+  <!-- If you ALREADY have /scan (e.g., TurtleBot3): comment the converter out. -->
+  <!-- Depth image -> LaserScan (needed for avoidance & mapping if you have a depth camera) -->
+  <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="d2l" output="screen" required="false">
+    <remap from="image"       to="/camera/depth/image_raw"/>
+    <remap from="camera_info" to="/camera/depth/camera_info"/>
+    <remap from="scan"        to="/scan"/>
+    <param name="scan_height" value="10"/>
+    <param name="range_min"   value="0.2"/>
+    <param name="output_frame_id" value="camera_depth_frame"/>
+  </node>
+
+  <!-- Mapping (occupancy grid while driving) -->
+  <include file="$(find turtlebot_gazebo)/launch/gmapping_demo.launch"/>
+
+  <!-- Our reactive controller -->
+  <node pkg="IRProject1" type="reactive_controller.py" name="reactive_controller" output="screen">
+    <!-- You can tweak params here if desired -->
+    <param name="~forward_speed" value="0.18"/>
+    <param name="~turn_speed" value="0.6"/>
+    <param name="~avoid_range_m"  value="0.55"/> <!-- increased from 1 ft -->
+    <param name="~symmetric_eps_m" value="0.05"/>
+    <param name="~random_turn_rad" value="0.261799"/> <!-- 15 deg -->
+    <param name="~escape_spread_rad" value="0.523599"/> <!-- 30 deg -->
+    <param name="~random_stride_m" value="0.3048"/> <!-- 1 ft -->
+    <param name="~teleop_timeout" value="0.4"/>
+  </node>
+</launch>
+
