@@ -2,7 +2,8 @@
 <sdf version="1.6">
   <world name="default">
 
-    <!-- Sun and ground -->
+    <!-- These is the base models that the turtlebot needs in order 
+    to have an environment to navigate-->
     <include>
       <uri>model://sun</uri>
     </include>
@@ -10,7 +11,8 @@
       <uri>model://ground_plane</uri>
     </include>
 
-    <!-- Your room and hallway model -->
+    <!-- This is the room and hallway model that serves as the environment 
+    that the turtlebot navigates -->
     <include>
       <uri>model://roomandhallway</uri>
       <pose>0 0 0 0 0 0</pose>
