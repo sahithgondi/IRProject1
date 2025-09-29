@@ -1,10 +1,10 @@
 <launch>
+<!-- First we want to find our world file-->
   <arg name="world_file" default="$(find IRProject1)/worlds/roomandhallway.world"/>
 
-  <!-- Use TurtleBot's Gazebo launcher instead of empty_world -->
+  <!-- Use Gazebo launcher to launch and interact with our world and turtlebot-->
   <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
     <arg name="world_file" value="$(arg world_file)"/>
     <arg name="gui" value="true"/>
   </include>
 </launch>
-
