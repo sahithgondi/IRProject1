@@ -24,17 +24,17 @@ class ReactiveController(object):
 
         # Parameters for robot movement either get from defined paramter or use default value here
         # These are in meters per second or in radians per second
-        self.forward_speed       = rospy.get_param('~forward_speed', 0.18)
-        self.turn_speed          = rospy.get_param('~turn_speed', 0.6)
-        self.avoid_range_m       = rospy.get_param('~avoid_range_m', 1.0*FT_TO_M) 
-        self.symmetric_eps_m     = rospy.get_param('~symmetric_eps_m', 0.05)
-        self.random_turn_rad     = rospy.get_param('~random_turn_rad', math.radians(15.0)) 
-        self.escape_spread_rad   = rospy.get_param('~escape_spread_rad', math.radians(30.0))
-        self.teleop_timeout      = rospy.get_param('~teleop_timeout', 0.4)         
-        self.random_stride_m     = rospy.get_param('~random_stride_m', 1.0*FT_TO_M)
+        self.forward_speed = rospy.get_param('~forward_speed', 0.18)
+        self.turn_speed = rospy.get_param('~turn_speed', 0.6)
+        self.avoid_range_m = rospy.get_param('~avoid_range_m', 1.0*FT_TO_M) 
+        self.symmetric_eps_m = rospy.get_param('~symmetric_eps_m', 0.05)
+        self.random_turn_rad = rospy.get_param('~random_turn_rad', math.radians(15.0)) 
+        self.escape_spread_rad = rospy.get_param('~escape_spread_rad', math.radians(30.0))
+        self.teleop_timeout = rospy.get_param('~teleop_timeout', 0.4)         
+        self.random_stride_m = rospy.get_param('~random_stride_m', 1.0*FT_TO_M)
         # Use teleop instead of cmd_vel
-        self.teleop_topic        = rospy.get_param('~teleop_topic', '/teleop_cmd') 
-        self.log_every           = rospy.get_param('~log_every', 10)
+        self.teleop_topic = rospy.get_param('~teleop_topic', '/teleop_cmd') 
+        self.log_every = rospy.get_param('~log_every', 10)
 
         # Creates a publisher that sends commands to the turtlebot
         self.cmd_pub = rospy.Publisher('/mobile_base/commands/velocity', Twist, queue_size=10)
